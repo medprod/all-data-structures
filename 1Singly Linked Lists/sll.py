@@ -8,19 +8,12 @@ class Node:
 class LinkedList:
     def __init__(self):
         self.head = None #points to head of the linked list
-
-    #method will insert element at beggining of linked list
-    def insertBeginning(self, data):
-        #Node Class above has two parameters - data & next
-        node = Node(data, self.head) #data, self.head = next element is current head
-        self.head = node #our head now is node
     
     #printing function
     def print(self):
         if self.head is None:
             print("Linked List is Empty.")
             return
-        
         #itr = iteration
         itr = self.head
         llstr = "" #a linked list string
@@ -28,6 +21,12 @@ class LinkedList:
             llstr += str(itr.data) + "-->"
             itr = itr.next
         print(llstr)
+        
+    #method will insert element at beggining of linked list
+    def insertBeginning(self, data):
+        #Node Class above has two parameters - data & next
+        node = Node(data, self.head) #data, self.head = next element is current head
+        self.head = node #our head now is node
     
     #inserting element at the end
     def insertEnd(self, data):
