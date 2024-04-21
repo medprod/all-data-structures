@@ -34,9 +34,9 @@ class BST(object):
                 
     def deleteNode(self, node, value):
         if value < node.value:
-            self.deleteNode(node.leftChild, value)
+            node.leftChild = self.deleteNode(node.leftChild, value)
         elif value > node.value: 
-            self.deleteNode(node.rightChild, value)
+            node.rightChild = self.deleteNode(node.rightChild, value)
             #if value == node.value
         else:
             if node.leftChild is None:
@@ -44,32 +44,39 @@ class BST(object):
             elif node.rightChild is None:
                 node = node.leftChild
             else:
-                node = self.successor(node)
-                node = self.deleteNode(node, value)
-                
+                successor = self.successor(node.rightChild)
+                node.value = successor.value
+                node.rightChild = self.deleteNode(node.rightChild, successor.value)
+               
         return node
                 
     def successor(self, node):
-        if node.rightChild:
-            node = node.rightChild
-            while node.leftChild:
-                node = node.leftChild
+        curr = node
+        while curr.leftChild:
+            curr = curr.leftChild
                 
-        return node
+        return curr
 
     
     def inOrder(self, node, res):
         if node:
-            self.inOrder(node.leftChild)
+            self.inOrder(node.leftChild, res)
             print(node.value)
-            self.inOrder(node.rightChild)
+            self.inOrder(node.rightChild, res)
     
 if __name__ == '__main__':
     bst = BST()
     bst.insert(10)
     bst.insert(20)
+    bst.insert(14)
+    bst.insert(4)
+    bst.insert(25)
     bst.insert(5)
     bst.insert(6)
+    
+    print("Before deletion:", bst.inOrder(bst.root, []))
+    bst.delete(10)
+    print("After deletion:", bst.inOrder(bst.root, []))
     
     
     
