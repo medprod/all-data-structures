@@ -26,19 +26,43 @@ class BST(object):
             else:
                 self.insertNode(node.rightChild, value)
                 
+    def delete(self, value):
+        if self.root is None:
+            print("Tree is empty, has no elements")
+        else:
+            self.deleteNode(self.root, value)
+                
+    def deleteNode(self, node, value):
+        if value < node.value:
+            self.deleteNode(node.leftChild, value)
+        elif value > node.value: 
+            self.deleteNode(node.rightChild, value)
+            #if value == node.value
+        else:
+            if node.leftChild is None:
+                node = node.rightChild
+            elif node.rightChild is None:
+                node = node.leftChild
+            else:
+                node = self.successor(node)
+                node = self.deleteNode(node, value)
+                
+        return node
+                
+    def successor(self, node):
+        if node.rightChild:
+            node = node.rightChild
+            while node.leftChild:
+                node = node.leftChild
+                
+        return node
+
     
     def inOrder(self, node, res):
         if node:
-            self.inOrder(node.leftChild, res)
-            res.append(node.value)
-            self.inOrder(node.rightChild, res)
-        
-                
-    def print(self):
-        res = []
-        self.inOrder(self.root, res)
-        print(res)
-        
+            self.inOrder(node.leftChild)
+            print(node.value)
+            self.inOrder(node.rightChild)
     
 if __name__ == '__main__':
     bst = BST()
@@ -47,7 +71,7 @@ if __name__ == '__main__':
     bst.insert(5)
     bst.insert(6)
     
-    bst.print()
+    
     
         
 
